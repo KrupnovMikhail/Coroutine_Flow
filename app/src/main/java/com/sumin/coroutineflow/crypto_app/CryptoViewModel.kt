@@ -11,7 +11,7 @@ class CryptoViewModel : ViewModel() {
 
     private val repository = CryptoRepository
 
-    val state: LiveData<State> = repository.getCurrencyList()
+    val state: Flow<State> = repository.getCurrencyList()
         .filter { it.isNotEmpty() }
         .map { State.Content(currencyList = it) as State }
         .onStart {
@@ -25,7 +25,6 @@ class CryptoViewModel : ViewModel() {
         .onCompletion {
             Log.d("CryptoViewModel", "Complete")
         }
-        .asLiveData()
 
 }
 
