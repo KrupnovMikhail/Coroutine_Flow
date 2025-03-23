@@ -42,6 +42,7 @@ class CryptoActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
+        viewModel.toString()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.state
@@ -62,7 +63,19 @@ class CryptoActivity : AppCompatActivity() {
                             }
                         }
                     }
-
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.state2
+                    .collect {
+                        when (it) {
+                            is State.Content -> {
+                                Log.d("CryptoActivity", it.currencyList.joinToString())
+                            }
+                            else -> {}
+                        }
+                    }
             }
         }
     }
